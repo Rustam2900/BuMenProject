@@ -63,6 +63,15 @@ class Quotes(BaseModel):
         return self.title
 
 
+class AboutApp(BaseModel):
+    caption = models.CharField(max_length=50)
+    text = models.TextField()
+
+    class Meta:
+        verbose_name = _("ilova haqida malumotlar")
+        verbose_name_plural = _("ilova haqida malumotlar")
+
+
 class Advertising(BaseModel):
     image = models.ImageField(upload_to='advertising/%Y/%m/')
     link = models.URLField(null=True)
