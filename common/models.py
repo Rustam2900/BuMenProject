@@ -66,6 +66,7 @@ class Quotes(BaseModel):
 class AboutApp(BaseModel):
     caption = models.CharField(max_length=50)
     text = models.TextField()
+    order = models.PositiveIntegerField(default=1)
 
     class Meta:
         verbose_name = _("ilova haqida malumotlar")
