@@ -65,6 +65,7 @@ class Quotes(BaseModel):
 
 class Advertising(BaseModel):
     image = models.ImageField(upload_to='advertising/%Y/%m/')
+    link = models.URLField(null=True)
 
     # audit_log = AuditLog()
     # history = HistoricalRecords()
