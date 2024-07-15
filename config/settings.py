@@ -1,4 +1,5 @@
 from pathlib import Path
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -10,9 +11,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-s6d_9l5z$bal=y0&*w1m&_jqwzf#e-b0&$b7+gnmyj-j=#mry*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+env = environ.Env(
+    DEBUG=(bool, True),
+    ALLOWED_HOSTS=(list, ["*"]),
+)
 
-ALLOWED_HOSTS = ['*']
+DEBUG = env('DEBUG')
+ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 
 INSTALLED_APPS = [
     'modeltranslation',
@@ -31,6 +36,8 @@ INSTALLED_APPS = [
     # apps
     'users',
     'common',
+    # 'audit_log',
+    # 'simple_history',
 ]
 
 MIDDLEWARE = [
@@ -43,6 +50,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'audit_log.middleware.JWTAuthMiddleware',
+    # 'audit_log.middleware.UserLoggingMiddleware',
+    # 'simple_history.middleware.HistoryRequestMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -71,8 +81,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': "django.db.backends.postgresql",
+        'NAME': env("NAME", default='bumen'),
+        'USER': env('USER', default='postgres'),
+        'PASSWORD': env('PASSWORD', default='rus_2900'),
+        'HOST': env('HOST', default='localhost'),
+        'PORT': env('PORT', default=5432),
     }
 }
 

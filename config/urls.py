@@ -12,7 +12,7 @@ schema_view = get_schema_view(
       title="Bu Men Project API",
       default_version='v1',
       description="This is Bu Men project",
-      contact=openapi.Contact(email="xoliqberdiyevbehruz12@gmail.com"),
+      contact=openapi.Contact(email="jumanazarustam@gmail.com"),
       license=openapi.License(name="demo license"),
    ),
    public=True,

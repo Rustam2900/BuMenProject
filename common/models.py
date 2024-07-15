@@ -4,14 +4,21 @@ from shared.models import BaseModel
 from django.utils.translation import gettext_lazy as _
 
 
+# from audit_log.models.managers import AuditLog
+# from simple_history.models import HistoricalRecords
+
+
 class Settings(BaseModel):
     objects = models.Manager()
     email = models.EmailField()
     links = models.URLField()
     contact_phone = models.CharField(max_length=30, null=True, blank=True)
-    longitude = models.BigIntegerField()
-    latitude = models.BigIntegerField()
+    longitude = models.DecimalField(max_digits=9, decimal_places=6)
+    latitude = models.DecimalField(max_digits=9, decimal_places=6)
     location_text = models.TextField(_('location_text'))
+
+    # audit_log = AuditLog()
+    # history = HistoricalRecords()
 
     class Meta:
         verbose_name = _('Settings')
@@ -23,8 +30,13 @@ class Settings(BaseModel):
 
 
 class News(BaseModel):
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=255, verbose_name=_('title'))
+    banner = models.ImageField(null=True, upload_to='common/news/%Y/%m')
     content = RichTextUploadingField()
+    slug = models.SlugField(unique=True, null=True)
+
+    # audit_log = AuditLog()
+    # history = HistoricalRecords()
 
     class Meta:
         verbose_name = _('News')
@@ -39,6 +51,9 @@ class Quotes(BaseModel):
     title = models.CharField(max_length=255)
     content = RichTextUploadingField()
 
+    # audit_log = AuditLog()
+    # history = HistoricalRecords()
+
     class Meta:
         verbose_name = _('Quotes')
         verbose_name_plural = _("Quotes")
@@ -50,6 +65,9 @@ class Quotes(BaseModel):
 
 class Advertising(BaseModel):
     image = models.ImageField(upload_to='advertising/%Y/%m/')
+
+    # audit_log = AuditLog()
+    # history = HistoricalRecords()
 
     class Meta:
         verbose_name = _('Advertising')
@@ -63,6 +81,9 @@ class Advertising(BaseModel):
 class FAQ(BaseModel):
     question = models.CharField(max_length=255)
     answer = models.TextField()
+
+    # audit_log = AuditLog()
+    # history = HistoricalRecords()
 
     class Meta:
         verbose_name = _('FAQ')

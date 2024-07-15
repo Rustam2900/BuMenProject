@@ -1,7 +1,13 @@
 from django.contrib import admin
+from django.contrib.admin.models import LogEntry
 from modeltranslation.admin import TranslationAdmin
 
 from common.models import Settings, Quotes, FAQ, Advertising, News
+# from simple_history.admin import SimpleHistoryAdmin
+
+# from audit_log.models import
+
+# admin.site.register(LogEntry)
 
 
 @admin.register(Settings)
