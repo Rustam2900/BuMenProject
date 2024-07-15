@@ -92,11 +92,13 @@ class Advertising(BaseModel):
 class FAQ(BaseModel):
     question = models.CharField(max_length=255)
     answer = models.TextField()
+    order = models.PositiveIntegerField(default=1)
 
     # audit_log = AuditLog()
     # history = HistoricalRecords()
 
     class Meta:
+        ordering = ('order', 'created_at')
         verbose_name = _('FAQ')
         verbose_name_plural = _("FAQ")
         db_table = 'faq'
