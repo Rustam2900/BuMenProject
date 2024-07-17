@@ -46,7 +46,6 @@ class User(AbstractUser):
     class Meta:
         verbose_name = _('User')
         verbose_name_plural = _('Users')
-        db_table = 'users'
 
 
 class UserContactApplication(BaseModel):
@@ -62,4 +61,3 @@ class UserContactApplication(BaseModel):
         ordering = ['is_contacted', 'created_at']
         verbose_name = _('User Contact Application')
         verbose_name_plural = _('User Contact Applications')
-        db_table = 'user_contact_application'

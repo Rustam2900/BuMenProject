@@ -11,8 +11,8 @@ from django.utils.translation import gettext_lazy as _
 class Settings(BaseModel):
     objects = models.Manager()
     email = models.EmailField()
-    appstore_link = models.URLField(null=True)
-    playmaket_link = models.URLField(null=True)
+    appstore_link = models.URLField()
+    playmaket_link = models.URLField()
     contact_phone = models.CharField(max_length=30, null=True, blank=True)
     longitude = models.DecimalField(max_digits=9, decimal_places=6)
     latitude = models.DecimalField(max_digits=9, decimal_places=6)
@@ -28,7 +28,6 @@ class Settings(BaseModel):
     class Meta:
         verbose_name = _('Settings')
         verbose_name_plural = _("Settings")
-        db_table = 'settings'
 
     def __str__(self):
         return "Settings"
@@ -46,18 +45,17 @@ class Page(BaseModel):
 
 class News(BaseModel):
     title = models.CharField(max_length=255, verbose_name=_('title'))
-    banner = models.ImageField(null=True, upload_to='common/news/%Y/%m')
+    banner = models.ImageField(upload_to='common/news/%Y/%m')
     content = RichTextUploadingField()
-    slug = models.SlugField(unique=True, null=True)
+    slug = models.SlugField(unique=True)
     top = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = _('News')
         verbose_name_plural = _("News")
-        db_table = 'news'
 
-        def __str__(self):
-            return self.title
+    def __str__(self):
+        return self.title
 
 
 class Quotes(BaseModel):
@@ -70,7 +68,6 @@ class Quotes(BaseModel):
     class Meta:
         verbose_name = _('Quotes')
         verbose_name_plural = _("Quotes")
-        db_table = 'quotes'
 
     def __str__(self):
         return self.title
@@ -79,7 +76,7 @@ class Quotes(BaseModel):
 class AboutApp(BaseModel):
     caption = models.CharField(max_length=50)
     text = models.TextField()
-    order = models.PositiveIntegerField(null=True)
+    order = models.PositiveIntegerField()
 
     class Meta:
         verbose_name = _("ilova haqida malumotlar")
@@ -97,7 +94,7 @@ class AboutApp(BaseModel):
 
 class Advertising(BaseModel):
     image = models.ImageField(upload_to='advertising/%Y/%m/')
-    link = models.URLField(null=True)
+    link = models.URLField()
 
     # audit_log = AuditLog()
     # history = HistoricalRecords()
@@ -105,7 +102,6 @@ class Advertising(BaseModel):
     class Meta:
         verbose_name = _('Advertising')
         verbose_name_plural = _("Advertising")
-        db_table = 'advertising'
 
     def __str__(self):
         return f"image {self.id}"
@@ -114,7 +110,7 @@ class Advertising(BaseModel):
 class FAQ(BaseModel):
     question = models.CharField(max_length=255)
     answer = models.TextField()
-    order = models.PositiveIntegerField(null=True)
+    order = models.PositiveIntegerField()
 
     # audit_log = AuditLog()
     # history = HistoricalRecords()
@@ -123,7 +119,6 @@ class FAQ(BaseModel):
         ordering = ('order', 'created_at')
         verbose_name = _('FAQ')
         verbose_name_plural = _("FAQ")
-        db_table = 'faq'
 
     def save(self, *args, **kwargs):
         if self.order is None:
@@ -140,7 +135,7 @@ class FAQ(BaseModel):
 
 class Partner(BaseModel):
     photo = models.ImageField(upload_to='common/partner/%Y/%m')
-    link = models.URLField(null=True, blank=True)
+    link = models.URLField()
 
     class Meta:
         verbose_name = _("partner")
