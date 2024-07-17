@@ -11,11 +11,16 @@ from django.utils.translation import gettext_lazy as _
 class Settings(BaseModel):
     objects = models.Manager()
     email = models.EmailField()
-    links = models.URLField()
+    appstore_link = models.URLField(null=True)
+    playmaket_link = models.URLField(null=True)
     contact_phone = models.CharField(max_length=30, null=True, blank=True)
     longitude = models.DecimalField(max_digits=9, decimal_places=6)
     latitude = models.DecimalField(max_digits=9, decimal_places=6)
     location_text = models.TextField(_('location_text'))
+    telegram = models.CharField(max_length=70, null=True, blank=True)
+    instagram = models.CharField(max_length=70, null=True, blank=True)
+    linkedin = models.CharField(max_length=70, null=True, blank=True)
+    facebook = models.CharField(max_length=70, null=True, blank=True)
 
     # audit_log = AuditLog()
     # history = HistoricalRecords()
@@ -29,22 +34,30 @@ class Settings(BaseModel):
         return "Settings"
 
 
+class Page(BaseModel):
+    slug = models.SlugField(max_length=255, unique=True)
+    title = models.CharField(_("title"), max_length=255)
+    content = RichTextUploadingField(_("content"))
+
+    class Meta:
+        verbose_name = _("Page")
+        verbose_name_plural = _("pages")
+
+
 class News(BaseModel):
     title = models.CharField(max_length=255, verbose_name=_('title'))
     banner = models.ImageField(null=True, upload_to='common/news/%Y/%m')
     content = RichTextUploadingField()
     slug = models.SlugField(unique=True, null=True)
-
-    # audit_log = AuditLog()
-    # history = HistoricalRecords()
+    top = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = _('News')
         verbose_name_plural = _("News")
         db_table = 'news'
 
-    def __str__(self):
-        return self.title
+        def __str__(self):
+            return self.title
 
 
 class Quotes(BaseModel):
@@ -123,3 +136,12 @@ class FAQ(BaseModel):
 
     def __str__(self):
         return self.question
+
+
+class Partner(BaseModel):
+    photo = models.ImageField(upload_to='common/partner/%Y/%m')
+    link = models.URLField(null=True, blank=True)
+
+    class Meta:
+        verbose_name = _("partner")
+        verbose_name_plural = _("partners")

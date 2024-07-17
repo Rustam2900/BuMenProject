@@ -1,17 +1,29 @@
 from modeltranslation.translator import register, TranslationOptions
-from . import models
+from common.models import Settings, AboutApp, FAQ, Page, Quotes
 
 
-@register(models.Settings)
+@register(Settings)
 class SettingsTranslationOptions(TranslationOptions):
     fields = ('location_text',)
 
 
-@register(models.AboutApp)
+@register(AboutApp)
 class AboutAppTranslations(TranslationOptions):
     fields = ('caption', 'text')
 
 
-@register(models.FAQ)
+@register(FAQ)
 class FAQTranslations(TranslationOptions):
     fields = ('question', 'answer')
+
+
+@register(Page)
+class PageTranslations(TranslationOptions):
+    fields = ('title', 'content')
+
+
+@register(Quotes)
+class QuotesTranslationOptions(TranslationOptions):
+    fields = ('title', 'content')
+
+

@@ -51,18 +51,15 @@ class User(AbstractUser):
 
 class UserContactApplication(BaseModel):
     full_name = models.CharField(max_length=255)
-    phone = models.CharField(max_length=50, unique=True)
-    message = models.TextField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    phone = models.CharField(max_length=20)
+    message = models.TextField(max_length=500)
     is_contacted = models.BooleanField(default=False)
 
     def __str__(self):
         return self.full_name
 
     class Meta:
+        ordering = ['is_contacted', 'created_at']
         verbose_name = _('User Contact Application')
         verbose_name_plural = _('User Contact Applications')
         db_table = 'user_contact_application'
-        ordering = ['-created_at']
-
-
