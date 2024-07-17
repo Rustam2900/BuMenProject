@@ -66,11 +66,20 @@ class Quotes(BaseModel):
 class AboutApp(BaseModel):
     caption = models.CharField(max_length=50)
     text = models.TextField()
-    order = models.PositiveIntegerField(default=1)
+    order = models.PositiveIntegerField(null=True)
 
     class Meta:
         verbose_name = _("ilova haqida malumotlar")
         verbose_name_plural = _("ilova haqida malumotlar")
+
+    def save(self, *args, **kwargs):
+        if self.order is None:
+            order = 1
+            last_about_app = AboutApp.objects.order_by('order').last()
+            if last_about_app:
+                order = last_about_app.order + 1
+            self.order = order
+        super().save(*args, **kwargs)
 
 
 class Advertising(BaseModel):
@@ -110,7 +119,7 @@ class FAQ(BaseModel):
             if last_faq:
                 order = last_faq.order + 1
             self.order = order
-        super().save(self, *args, **kwargs)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.question
