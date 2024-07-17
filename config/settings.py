@@ -1,5 +1,6 @@
 from pathlib import Path
 import environ
+# from .jazzmin_settigs import *
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,6 +22,7 @@ ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 
 INSTALLED_APPS = [
     'modeltranslation',
+    # 'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -161,3 +163,5 @@ REST_FRAMEWORK = {
 }
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
+
+# JAZZMIN_SETTINGS = JAZZMIN_SETTINGS

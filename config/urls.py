@@ -8,17 +8,16 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
 schema_view = get_schema_view(
-   openapi.Info(
-      title="Bu Men Project API",
-      default_version='v1',
-      description="This is Bu Men project",
-      contact=openapi.Contact(email="jumanazarustam@gmail.com"),
-      license=openapi.License(name="demo license"),
-   ),
-   public=True,
-   permission_classes=(permissions.AllowAny,),
+    openapi.Info(
+        title="Bu Men Project API",
+        default_version='v1',
+        description="This is Bu Men project",
+        contact=openapi.Contact(email="jumanazarustam@gmail.com"),
+        license=openapi.License(name="demo license"),
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
 )
-
 
 urlpatterns = [
     path("i18n/", include("django.conf.urls.i18n")),

@@ -92,7 +92,7 @@ class Advertising(BaseModel):
 class FAQ(BaseModel):
     question = models.CharField(max_length=255)
     answer = models.TextField()
-    order = models.PositiveIntegerField(default=1)
+    order = models.PositiveIntegerField(null=True)
 
     # audit_log = AuditLog()
     # history = HistoricalRecords()
@@ -102,6 +102,15 @@ class FAQ(BaseModel):
         verbose_name = _('FAQ')
         verbose_name_plural = _("FAQ")
         db_table = 'faq'
+
+    def save(self, *args, **kwargs):
+        if self.order is None:
+            order = 1
+            last_faq = FAQ.objects.order_by('order').last()
+            if last_faq:
+                order = last_faq.order + 1
+            self.order = order
+        super().save(self, *args, **kwargs)
 
     def __str__(self):
         return self.question
